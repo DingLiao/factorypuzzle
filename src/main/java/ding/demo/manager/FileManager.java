@@ -11,11 +11,18 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class FileManager {
-	private PrintWriter writer;
+	private static FileManager instance = null;
 	private String format = "UTF-8";
 	
 	public static FileManager getInstance(){
-		return new FileManager();
+		if(instance == null) {
+			synchronized(FileManager.class) {
+				if(instance == null) {
+					instance = new FileManager();
+				}
+			}
+		}
+		return instance;
 	}
 	
 	public void writeToFile(InputStream uploadedInputStream,
@@ -42,6 +49,7 @@ public class FileManager {
 	
 	public void generateResultFile(String filePath, List<String> fileContent){
 		System.out.println("******** generateResultFile *********");
+		PrintWriter writer = null;
 		try {
 			writer = new PrintWriter(filePath, format);
 			for(int i=0; i< fileContent.size(); i++) {
@@ -60,5 +68,21 @@ public class FileManager {
 		}
 	}
 	
+	public void deleteFile(File f) throws IOException {
+		if(!f.exists())
+			return;
+		
+		if (f.isDirectory()) {
+			for (File c : f.listFiles())
+				deleteFile(c);
+		}
+		if (!f.delete())
+			throw new FileNotFoundException("Failed to delete file: " + f);
+	}
+	
+	public void deleteFile(String path) throws IOException {
+		File f = new File(path);
+		deleteFile(f);
+	}
 	
 }
