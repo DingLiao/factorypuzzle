@@ -41,11 +41,11 @@ public class PaintFactoryTest {
     }
 
     /**
-     * Test to see that the message "Got it!" is sent in the response.
+     * Test to see that the message "Hello World" is sent in the response.
      */
     @Test
-    public void testGetIt() {
-        String responseMsg = target.path("paintfactory").request().get(String.class);
-        assertEquals("Got it!", responseMsg);
+    public void testHelloWorld() {
+        String responseMsg = target.path("paint-request").request().get(String.class);
+        assertEquals("Hello World", responseMsg);
     }
 }

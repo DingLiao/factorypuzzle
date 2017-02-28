@@ -30,7 +30,7 @@ public class ParseFileManager {
 		} catch(FileNotFoundException e) {
 			throw new Exception("Input file is not found.");
 		} catch(Exception e) {
-			throw new Exception("At "+ bufferedReader.getLineContent() + "\n" + e.getMessage());
+			throw new Exception("Exception: At "+ bufferedReader.getLineContent() + "\n" + e.getMessage());
 		} finally {
 			try {
 				closeReader();

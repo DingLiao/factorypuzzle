@@ -68,6 +68,24 @@ public class FileManager {
 		}
 	}
 	
+	public void generateResultFile(String filePath, String content){
+        System.out.println("******** generateResultFile *********");
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(filePath, format);
+            writer.println(content);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            writer.close();
+            
+        }
+    }
+	
 	public void deleteFile(File f) throws IOException {
 		if(!f.exists())
 			return;
