@@ -39,9 +39,9 @@ import ding.demo.model.PaintRequestResponse;
 import ding.demo.model.TestCase;
 
 /**
- * Root resource (exposed at "paintfactory" path)
+ * Root resource (exposed at "paint-requests" path)
  */
-@Path("paint-request")
+@Path("paint-requests")
 public class PaintRequest {
     @Context
     UriInfo uriInfo;
@@ -63,14 +63,14 @@ public class PaintRequest {
             @FormDataParam("file") FormDataContentDisposition fileDetail,
             @FormDataParam("path") String path
             ) {
-        String uploadedFileFolderLocation = UriBuilder.fromPath(Main.TMP_FILE_URI).path(fileDetail.getFileName()).build().toASCIIString();
-        String uploadedFileLocation = UriBuilder.fromPath(Main.TMP_FILE_URI).path(fileDetail.getFileName()).path(fileDetail.getFileName()).build().toASCIIString();
-        String resultFileLocation = UriBuilder.fromPath(Main.TMP_FILE_URI).path(fileDetail.getFileName()).path(fileDetail.getFileName() + Main.RESULT_SUFFIX).build().toASCIIString();
+        String uploadedFileFolderLocation = UriBuilder.fromPath(Application.TMP_FILE_URI).path(fileDetail.getFileName()).build().toASCIIString();
+        String uploadedFileLocation = UriBuilder.fromPath(Application.TMP_FILE_URI).path(fileDetail.getFileName()).path(fileDetail.getFileName()).build().toASCIIString();
+        String resultFileLocation = UriBuilder.fromPath(Application.TMP_FILE_URI).path(fileDetail.getFileName()).path(fileDetail.getFileName() + Application.RESULT_SUFFIX).build().toASCIIString();
         initialInputFileFolder(uploadedFileFolderLocation);
         FileManager.getInstance().writeToFile(uploadedInputStream, uploadedFileLocation);
         processInputFile(uploadedFileLocation, resultFileLocation);
 
-        return generatePaintFactoryResponse(fileDetail.getFileName(), fileDetail.getFileName() + Main.RESULT_SUFFIX);
+        return generatePaintFactoryResponse(fileDetail.getFileName(), fileDetail.getFileName() + Application.RESULT_SUFFIX);
     }
 
     @GET
@@ -80,7 +80,7 @@ public class PaintRequest {
             @PathParam("folderName") String folderName,
             @PathParam("fileName") String fileName
             ) {
-        final File f = new File(UriBuilder.fromPath(Main.TMP_FILE_URI).path(folderName).path(fileName).build().toASCIIString());
+        final File f = new File(UriBuilder.fromPath(Application.TMP_FILE_URI).path(folderName).path(fileName).build().toASCIIString());
         if (!f.exists()) {
             return Response.status(Status.NOT_FOUND).entity("The request file can not be found!").build();
         }

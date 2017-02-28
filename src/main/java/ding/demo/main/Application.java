@@ -1,7 +1,10 @@
 package ding.demo.main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Properties;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -12,11 +15,11 @@ import org.glassfish.jersey.server.ResourceConfig;
  * Main class.
  *
  */
-public class Main {
+public class Application {
     // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://localhost:8080/paintfactory/";
-    public static final String TMP_FILE_URI = "/Users/ding/Tmp/";
-    public static final String RESULT_SUFFIX = ".result";
+    public static String BASE_URI;
+    public static String TMP_FILE_URI;
+    public static String RESULT_SUFFIX;
 
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
@@ -37,11 +40,21 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+        initializeParameter();
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
         server.stop();
+    }
+    
+    private static void initializeParameter() throws FileNotFoundException, IOException{
+        System.out.println("******** initial parameter from properties *********");
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        TMP_FILE_URI = properties.getProperty("TMP_FILE_URI");
+        RESULT_SUFFIX = properties.getProperty("RESULT_SUFFIX");
+        BASE_URI = properties.getProperty("BASE_URI"); 
     }
 }
 
