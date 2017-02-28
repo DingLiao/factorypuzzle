@@ -2,7 +2,6 @@
 
 
 ##  What is it?
-  -----------
 
  	Paint factory is used for solving the puzzle: Satisfy all customers
  	with limit paint types. 
@@ -10,7 +9,7 @@
  	For the details of puzzle, please check file /resource/PaintShop.pdf
 
 ##  Documentation
-  -------------
+
 	For the issue, there are pre-fix constrains:
 	* One customer at most prefer one matte paint
 	* One customer can be satisfied by one paint
@@ -34,17 +33,17 @@
   
   
 ## Usage
-  ------------
 
  	set the initialize parameter in "config.properties"
  	run "src/main/java/ding/demo/main/Application.java" as Java Application.
 
 ### API 
-  ------------	
+
 	The API is self-describing and can be explored from the base URL by default:
 
 	POST: http://localhost:8080/paintfactory/api/v1/paint-requests
 	Parameters
+	
 		| Name | Required | Type | Description |
 		| --- | --- | --- | --- |
 		| file | required | file | File contains paint request in the defined format |
@@ -71,4 +70,3 @@
 	Successful response is the content of file
   
 ##  Contacts
-  --------
