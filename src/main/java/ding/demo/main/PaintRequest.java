@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,10 +51,10 @@ public class PaintRequest {
     Request request;
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent to
-     * the client as "text/plain" media type.
+     * Method handling HTTP POST requests. The returned object will be sent to
+     * the client as "application/json" media type.
      *
-     * @return String that will be returned as a text/plain response.
+     * @return String that will be returned as a application/json response.
      */
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -84,22 +85,13 @@ public class PaintRequest {
         if (!f.exists()) {
             return Response.status(Status.NOT_FOUND).entity("The request file can not be found!").build();
         }
-
-        StreamingOutput stream = new StreamingOutput() {
-            @Override
-            public void write(OutputStream os) throws IOException,
-                    WebApplicationException {
-                Writer writer = new BufferedWriter(new OutputStreamWriter(os));
-                BufferedReader fileReader = new BufferedReader(new FileReader(f));
-                String line;
-                while ((line = fileReader.readLine()) != null)
-                    writer.write(line);
-                writer.flush();
-            }
-        };
-        return Response.ok(stream).build();
+        
+        String mt = new MimetypesFileTypeMap().getContentType(f);
+        return Response.ok(f, mt)
+                       .header("Content-disposition","attachment;filename=" + fileName)
+                       .header("ragma", "No-cache").header("Cache-Control", "no-cache").build();
     }
-
+    
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response helloWorld() {

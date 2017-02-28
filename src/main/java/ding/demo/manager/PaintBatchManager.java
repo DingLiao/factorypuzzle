@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ding.demo.model.Customer;
 import ding.demo.model.ImpossibleException;
@@ -96,11 +97,10 @@ public class PaintBatchManager {
 	}
 	
 	private List<Integer> listCustomerIdWhoesPreferenceStartWithPaintType(PaintType paint) {
-		List<Integer> result = new ArrayList<Integer>();
-		for(Customer c: customerMap.values()) {
-			if(c.isPreferedGlossyPaintsStartWithPaint(paint))
-				result.add(c.getId());
-		}
+		List<Integer> result = customerMap.values().stream()
+		        .filter(c -> c.isPreferedGlossyPaintsStartWithPaint(paint))
+		        .map(Customer::getId)
+		        .collect(Collectors.toList());
 		return result;
 	}
 	
