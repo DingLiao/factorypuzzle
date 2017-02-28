@@ -3,14 +3,14 @@
 
 ##  What is it?
 
- 	Paint factory is used for solving the puzzle: Satisfy all customers
+ 	Paint factory is a API used for solving the paint puzzle: Satisfy all customers
  	with limit paint types. 
  	
  	For the details of puzzle, please check file /resource/PaintShop.pdf
 
 ##  Documentation
 
-	For the issue, there are pre-fix constrains:
+	For the puzzle, there are pre-fix constrains:
 	* One customer at most prefer one matte paint
 	* One customer can be satisfied by one paint
 	* One paint batch contain unlimit amount of paint
@@ -29,7 +29,7 @@
 		3.1. dismiss the customer queue under this batch, and map them into another batch
 		3.2. if needed, repeat step 3
 		
-	4. when all customer have maped into the queue under each batch, then job done.
+	4. when all customer have mapped into the queue under each batch, then job done.
   
   
 ## Usage
