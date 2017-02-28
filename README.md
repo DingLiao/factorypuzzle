@@ -46,7 +46,7 @@
 	
 		| Name | Required | Type | Description |
 		| ---- | ---- | ---- | ---- |
-		| file | required | file | File contains paint request in the defined format |
+		| file | required | file | File contains paint request in the defined format, check PaintShop.pdf for details  |
 	
 	Every JSON response includes a `links` object which allows you to navigate the result of you uploaded request.
 	
@@ -69,4 +69,5 @@
 	GET:  http://localhost:8080/paintfactory/api/v1/paint-requests/:fildfolder/:filename
 	Successful response is the requested file
   
+  	Check /resource/test-data/ for testing files
 ##  Contacts
